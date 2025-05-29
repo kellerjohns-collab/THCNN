@@ -121,58 +121,55 @@ def TrainNN(variables: List,
     X_train01 = X[(EvNums % 10) > 3]
     y_train01 = y[(EvNums % 10) > 3]
     w_train01 = EvWeights[(EvNums % 10) > 3]
-    X_train23 = np.concatenate([X[(EvNums % 10) < 2], X[(EvNums % 10) > 5]])
-    y_train23 = np.concatenate([y[(EvNums % 10) < 2], y[(EvNums % 10) > 5]])
-    w_train23 = np.concatenate([EvWeights[(EvNums % 10) < 2], EvWeights[(EvNums % 10) > 5]])
-    X_train45 = np.concatenate([X[(EvNums % 10) < 4], X[(EvNums % 10) > 7]])
-    y_train45 = np.concatenate([y[(EvNums % 10) < 4], y[(EvNums % 10) > 7]])
-    w_train45 = np.concatenate([EvWeights[(EvNums % 10) < 4], EvWeights[(EvNums % 10) > 7]])
+    X_train23 = X[np.logical_or((EvNums % 10) < 2, (EvNums % 10) > 5)]
+    y_train23 = y[np.logical_or((EvNums % 10) < 2, (EvNums % 10) > 5)]
+    w_train23 = EvWeights[np.logical_or((EvNums % 10) < 2, (EvNums % 10) > 5)]
+    X_train45 = X[np.logical_or((EvNums % 10) < 4, (EvNums % 10) > 7)]
+    y_train45 = y[np.logical_or((EvNums % 10) < 4, (EvNums % 10) > 7)]
+    w_train45 = EvWeights[np.logical_or((EvNums % 10) < 4, (EvNums % 10) > 7)]
     X_train67 = X[(EvNums % 10) < 6]
     y_train67 = y[(EvNums % 10) < 6]
     w_train67 = EvWeights[(EvNums % 10) < 6]
-    X_train89 = X[(EvNums % 10) < 8 and (EvNums % 10) > 1]
-    y_train89 = y[(EvNums % 10) < 8 and (EvNums % 10) > 1]
-    w_train89 = EvWeights[(EvNums % 10) < 8 and (EvNums % 10) > 1]    
+    X_train89 = X[np.logical_and((EvNums % 10) < 8, (EvNums % 10) > 1)]
+    y_train89 = y[np.logical_and((EvNums % 10) < 8, (EvNums % 10) > 1)]
+    w_train89 = EvWeights[np.logical_and((EvNums % 10) < 8, (EvNums % 10) > 1)]
+
+    print("{}, {}, {}".format(len(X_train89), len(y_train89), len(w_train89)))
+    print("{}, {}, {}".format(len(X_train23), len(y_train23), len(w_train23)))
     
     X_test01 = X[(EvNums % 10) < 2]
     y_test01 = y[(EvNums % 10) < 2]
     w_test01 = EvWeights[(EvNums % 10) < 2]
-    X_test23 = X[(EvNums % 10) == 2 or (EvNums % 10) == 3]
-    y_test23 = y[(EvNums % 10) == 2 or (EvNums % 10) == 3]
-    w_test23 = EvWeights[(EvNums % 10) == 2 or (EvNums % 10) == 3]
-    X_test45 = X[(EvNums % 10) == 4 or (EvNums % 10) == 5]
-    y_test45 = y[(EvNums % 10) == 4 or (EvNums % 10) == 5]
-    w_test45 = EvWeights[(EvNums % 10) == 4 or (EvNums % 10) == 5]
-    X_test67 = X[(EvNums % 10) == 6 or (EvNums % 10) == 7]
-    y_test67 = y[(EvNums % 10) == 6 or (EvNums % 10) == 7]
-    w_test67 = EvWeights[(EvNums % 10) == 6 or (EvNums % 10) == 7]
-    X_test89 = X[(EvNums % 10) == 8 or (EvNums % 10) == 9]
-    y_test89 = y[(EvNums % 10) == 8 or (EvNums % 10) == 9]
-    w_test89 = EvWeights[(EvNums % 10) == 8 or (EvNums % 10) == 9]
+    X_test23 = X[np.logical_or((EvNums % 10) == 2, (EvNums % 10) == 3)]
+    y_test23 = y[np.logical_or((EvNums % 10) == 2, (EvNums % 10) == 3)]
+    w_test23 = EvWeights[np.logical_or((EvNums % 10) == 2, (EvNums % 10) == 3)]
+    X_test45 = X[np.logical_or((EvNums % 10) == 4, (EvNums % 10) == 5)]
+    y_test45 = y[np.logical_or((EvNums % 10) == 4, (EvNums % 10) == 5)]
+    w_test45 = EvWeights[np.logical_or((EvNums % 10) == 4, (EvNums % 10) == 5)]
+    X_test67 = X[np.logical_or((EvNums % 10) == 6, (EvNums % 10) == 7)]
+    y_test67 = y[np.logical_or((EvNums % 10) == 6, (EvNums % 10) == 7)]
+    w_test67 = EvWeights[np.logical_or((EvNums % 10) == 6, (EvNums % 10) == 7)]
+    X_test89 = X[np.logical_or((EvNums % 10) == 8, (EvNums % 10) == 9)]
+    y_test89 = y[np.logical_or((EvNums % 10) == 8, (EvNums % 10) == 9)]
+    w_test89 = EvWeights[np.logical_or((EvNums % 10) == 8, (EvNums % 10) == 9)]
 
-    X_val01 = X[(EvNums % 10) == 2 or (EvNums % 10) == 3]
-    y_val01 = y[(EvNums % 10) == 2 or (EvNums % 10) == 3]
-    w_val01 = EvWeights[(EvNums % 10) == 2 or (EvNums % 10) == 3]
-    X_val23 = X[(EvNums % 10) == 4 or (EvNums % 10) == 5]
-    y_val23 = y[(EvNums % 10) == 4 or (EvNums % 10) == 5]
-    w_val23 = EvWeights[(EvNums % 10) == 4 or (EvNums % 10) == 5]
-    X_val45 = X[(EvNums % 10) == 6 or (EvNums % 10) == 7]
-    y_val45 = y[(EvNums % 10) == 6 or (EvNums % 10) == 7]
-    w_val45 = EvWeights[(EvNums % 10) == 6 or (EvNums % 10) == 7]
-    X_val67 = X[(EvNums % 10) == 8 or (EvNums % 10) == 9]
-    y_val67 = y[(EvNums % 10) == 8 or (EvNums % 10) == 9]
-    w_val67 = EvWeights[(EvNums % 10) == 8 or (EvNums % 10) == 9]
+    X_val01 = X[np.logical_or((EvNums % 10) == 2, (EvNums % 10) == 3)]
+    y_val01 = y[np.logical_or((EvNums % 10) == 2, (EvNums % 10) == 3)]
+    w_val01 = EvWeights[np.logical_or((EvNums % 10) == 2, (EvNums % 10) == 3)]
+    X_val23 = X[np.logical_or((EvNums % 10) == 4, (EvNums % 10) == 5)]
+    y_val23 = y[np.logical_or((EvNums % 10) == 4, (EvNums % 10) == 5)]
+    w_val23 = EvWeights[np.logical_or((EvNums % 10) == 4, (EvNums % 10) == 5)]
+    X_val45 = X[np.logical_or((EvNums % 10) == 6, (EvNums % 10) == 7)]
+    y_val45 = y[np.logical_or((EvNums % 10) == 6, (EvNums % 10) == 7)]
+    w_val45 = EvWeights[np.logical_or((EvNums % 10) == 6, (EvNums % 10) == 7)]
+    X_val67 = X[np.logical_or((EvNums % 10) == 8, (EvNums % 10) == 9)]
+    y_val67 = y[np.logical_or((EvNums % 10) == 8, (EvNums % 10) == 9)]
+    w_val67 = EvWeights[np.logical_or((EvNums % 10) == 8, (EvNums % 10) == 9)]
     X_val89 = X[(EvNums % 10) < 2]
     y_val89 = y[(EvNums % 10) < 2]
     w_val89 = EvWeights[(EvNums % 10) < 2]
- 
-    EvNums01 = EvNums[(EvNums % 10 == 1)]
     
     print("Splitting 60/20/20 train/val/test")
-    #print("In training, have {} signal and {} bkg events ({} of total and {} S/B)".format( y_train.sum() , len(y_train)-y_train.sum(), round(len(y_train)/len(y),4), round(y_train.sum()/(len(y_train)-y_train.sum()),4) ))
-    #print("In val, have {} signal and {} bkg events ({} of total and {} S/B)".format( y_val.sum() , len(y_val)-y_val.sum(), round(len(y_val)/len(y),4), round(y_val.sum()/(len(y_val)-y_val.sum()),4) ))
-    #print("In test, have {} signal and {} bkg events ({} of total and {} S/B)".format( y_test.sum() , len(y_test)-y_test.sum(), round(len(y_test)/len(y),4), round(y_test.sum()/(len(y_test)-y_test.sum()),4) ))
-
     print("Training with {}, {}, {} nodes per layer".format(Nodes[0], Nodes[1],Nodes[2]))
 
     if preload:
