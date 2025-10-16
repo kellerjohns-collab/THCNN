@@ -1,8 +1,6 @@
 Some code from John for training neural networks for the ttH(cc) analysis.
 This has been used so far for studies on the impact flavor tagging granularity would have on the analysis.
 
-The package is based on code from the Top WG ML group. Credit to Knut Zoch and Mike Fenton.
-
 The NN's are trained using TensorFlow, interfaced to Keras. Prior to training, the data must be converted from ROOT to HDF5 format. This is done with the script HMaker.py.
 
 In order to access all of the packages, there are singularity images provided by the top team. For running on lxplus, do:
